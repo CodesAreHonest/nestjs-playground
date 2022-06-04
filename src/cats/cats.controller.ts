@@ -1,9 +1,14 @@
 import * as NestCommon from '@nestjs/common';
-import { CreateCatDto, UpdateCatDto } from './cats.types';
+import { Cat } from './interface/cats.interface';
+import { CreateCatDto } from './dto/create-cat.dto';
+import { UpdateCatDto } from './dto/update-cat.dto';
 import { Response } from 'express';
+import { CatsService } from './cats.service';
 
 @NestCommon.Controller('cats')
 export class CatsController {
+  constructor(private catsService: CatsService) {}
+
   @NestCommon.Post()
   @NestCommon.Header('Cache-control', 'none')
   @NestCommon.HttpCode(200)
@@ -16,8 +21,8 @@ export class CatsController {
   }
 
   @NestCommon.Get()
-  async findAll(): Promise<any[]> {
-    return [];
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
   }
 
   @NestCommon.Get(':id')
