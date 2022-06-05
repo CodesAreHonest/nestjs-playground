@@ -22,10 +22,10 @@ export class CatsController {
 
   @NestCommon.Get()
   async findAll(): Promise<Cat[]> {
-    throw new NestCommon.HttpException(
-      'Forbidden',
-      NestCommon.HttpStatus.FORBIDDEN,
-    );
+    // throw new NestCommon.HttpException(
+    //   'Forbidden',
+    //   NestCommon.HttpStatus.FORBIDDEN,
+    // );
 
     return this.catsService.findAll();
   }
