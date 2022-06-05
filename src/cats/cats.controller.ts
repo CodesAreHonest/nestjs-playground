@@ -22,11 +22,24 @@ export class CatsController {
 
   @NestCommon.Get()
   async findAll(): Promise<Cat[]> {
+    throw new NestCommon.HttpException(
+      'Forbidden',
+      NestCommon.HttpStatus.FORBIDDEN,
+    );
+
     return this.catsService.findAll();
   }
 
   @NestCommon.Get(':id')
-  findOne(@NestCommon.Param('id') id: string): string {
+  findOne(
+    @NestCommon.Param(
+      'id',
+      new NestCommon.ParseIntPipe({
+        errorHttpStatusCode: NestCommon.HttpStatus.NOT_ACCEPTABLE,
+      }),
+    )
+    id: string,
+  ): string {
     return `This action returns as #${id} cat`;
   }
 
